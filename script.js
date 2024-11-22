@@ -195,6 +195,7 @@ function showHiddenCard() {
 // Called from deal and after each time the player hits
 function checkPlayer21OrBust() {
     let playerTotal = getHandTotal(playerHand);
+
     if (playerTotal == 21) {
         setTimeout(gameOver, 500, "You got 21!", "win");
     }
@@ -332,32 +333,56 @@ function clearBoard() {
 // Once you get rest of the rest of the assignment completed, work on making this function
 // calculate the best hand total between A = 1 and A = 11. Hint: there can only be one high ace in a hand
 function getHandTotal(hand) {
-
+    let sum = 0;
+    for (let i = 0; i < hand.length; i++) {
+        let currFace = hand[i].charAt(0);
+        if (currFace == "T" || currFace == "J" || currFace == "Q" || currFace == "K") {
+            sum += 10;
+        }
+        else if (currFace == "A") {
+            sum += 1;
+        }
+        else {
+            sum += parseInt(currFace);
+        }
+    }
+    return sum;
 }
 
 // Adds a card to the player's hand array and updates UI with the card
 // TODO: Call this function from Hit button click
 // TODO: Implement this function
 function playerHit() {
-
+    let card = getCard();
+    playerHand.push(card);
+    addPlayerCard(card);
+    checkPlayer21OrBust();
 }
 
 // Adds a card to the dealer's hand array and updates UI with the card
 // TODO: Implement this function
 function dealerHit() {
-
+    let card = getCard();
+    dealerHand.push(card);
+    addDealerCard(card);
 }
 
 // Hides hit and stay buttons during dealer's turn
 // Called from dealerTurn()
 // TODO: Implement this function
 function hidePlayerControls() {
-    
+    let hitButton = document.getElementById("hit-button");
+    let stayButton = document.getElementById("stay-button");
+    hitButton.style.visibility = "hidden";
+    stayButton.style.visibility = "hidden";
 }
 
 // Shows hit and stay buttons
 // Called from deal()
 // TODO: Implement this function
 function showPlayerControls() {
-    
+    let hitButton = document.getElementById("hit-button");
+    let stayButton = document.getElementById("stay-button");
+    hitButton.style.visibility = "visible";
+    stayButton.style.visibility = "visible";
 }
